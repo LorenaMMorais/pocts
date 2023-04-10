@@ -6,7 +6,7 @@ export async function getMovies(req: Request, res: Response) {
     try{
         const listMovies = await movies();
         
-        res.send(listMovies.rows);
+        return res.send(listMovies.rows);
 
     }catch(error){
         res.sendStatus(500);
@@ -20,7 +20,7 @@ export async function getMoviesByGrades(req: Request, res: Response) {
 
     try{
         const foundMovies = await moviesByGrade(grade);
-        res.send(foundMovies.rows);
+        return res.send(foundMovies.rows);
     }catch(error){
         res. sendStatus(500);
     }
@@ -31,7 +31,7 @@ export async function postMovie(req: Request, res: Response) {
     
     try{
         const movieAdd = await insertMovie(req.body);
-        res.sendStatus(201);
+        return res.sendStatus(201);
     }catch(error){
         res.sendStatus(500);
     }
@@ -43,7 +43,7 @@ export async function removeMovieById(req: Request, res: Response) {
     
     try{
         await deleteMovieById(id);
-        res.sendStatus(200);
+        return res.sendStatus(200);
     }catch(error){
         res.sendStatus(500);
     }
@@ -55,7 +55,7 @@ export async function updateMovies(req: Request, res: Response) {
 
     try{
         await updateMovie(coment, id);
-        res.sendStatus(200);
+        return res.sendStatus(200);
     }catch(error){
         res.sendStatus(500);
     }

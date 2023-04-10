@@ -1,24 +1,14 @@
 import connectionDb from "../configs/database"
+import { MovieEntity, Movie } from "../protocols/movieProtocol";  
+import { QueryResult } from "pg";
 
-interface Movie {
-    name: string;
-    image: string;
-    synopsis: string;
-    imdbgrade: number;
-    releaseyear: number;
-    plataform: string;
-    coments: string[];
-    imdburl: string;
-    duration: number;
-  }
-  
-export async function movies() {
+export async function movies(): Promise<QueryResult<MovieEntity>> {
     return await connectionDb.query(
         `SELECT * FROM movies`
     );
 }
 
-export async function moviesByGrade(grade: string) {
+export async function moviesByGrade(grade: string): Promise<QueryResult<MovieEntity>> {
     
     const value = Number(grade);
 
@@ -28,7 +18,7 @@ export async function moviesByGrade(grade: string) {
     );
 }
 
-export async function insertMovie(body: Movie) {
+export async function insertMovie(body: MovieEntity): Promise<QueryResult<Movie>> {
 
     const { name, image, synopsis, imdbgrade, releaseyear, plataform, coments, imdburl, duration } = body;
 
@@ -39,7 +29,7 @@ export async function insertMovie(body: Movie) {
     );
 }
 
-export async function deleteMovieById(id: string) {
+export async function deleteMovieById(id: string): Promise<QueryResult<Movie>> {
     
     const value = Number(id);
 
@@ -49,7 +39,7 @@ export async function deleteMovieById(id: string) {
     );
 }
 
-export async function updateMovie(coment: string, id: number) {
+export async function updateMovie(coment: string, id: number): Promise<QueryResult> {
 
     return await connectionDb.query(
         `UPDATE movies SET coments = $1 WHERE id = $2`, 
